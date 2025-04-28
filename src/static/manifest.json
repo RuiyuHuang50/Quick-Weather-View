@@ -1,0 +1,21 @@
+{
+  "name": "Weather Extension",
+  "description": "Weather Extension and customized weather with weather API.",
+  "version": "1.3.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "weather-app.png",
+    "48": "weather-app.png",
+    "128": "weather-app.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Weather Extension",
+    "default_icon": "weather-app.png"
+  },
+  "permissions": ["alarms", "contextMenus", "storage"],
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  }
+}
