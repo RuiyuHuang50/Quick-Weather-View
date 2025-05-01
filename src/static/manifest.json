@@ -1,7 +1,7 @@
 {
-  "name": "Weather Extension",
-  "description": "Weather Extension and customized weather API.",
-  "version": "1.4.0",
+  "name": "Quick Weather View",
+  "description": "View current weather for multiple cities, check conditions via context menu, and see temperature on the badge.",
+  "version": "2.0.0",
   "manifest_version": 3,
   "icons": {
     "16": "icon.png",
@@ -10,7 +10,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Weather Extension",
+    "default_title": "Quick Weather View",
     "default_icon": "icon.png"
   },
   "permissions": ["alarms", "contextMenus", "storage", "notifications"],
