@@ -2,20 +2,15 @@
 // Polished MUI v4: With Loading Skeletons and Improved Error Display
 
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Grid,
-  Typography,
-  Paper, // Keep Paper for structure if needed, or just use Box
-} from "@material-ui/core";
-import { Skeleton, Alert } from "@material-ui/lab"; // Import Skeleton and Alert
+import { Box, Grid, Typography, Paper } from "@material-ui/core";
+import { Skeleton, Alert } from "@material-ui/lab";
 import {
   getWeatherIconSrc,
   fetchOpenWeatherData,
   OpenWeatherData,
   OpenWeatherTempScale,
 } from "../../utils/api";
-import "./WeatherCard.css"; // Your WeatherCard specific styles
+import "./WeatherCard.css";
 
 type WeatherCardState = "loading" | "error" | "ready";
 
@@ -25,31 +20,30 @@ const WeatherCard: React.FC<{
 }> = ({ city, tempScale }) => {
   const [weatherData, setWeatherData] = useState<OpenWeatherData | null>(null);
   const [cardState, setCardState] = useState<WeatherCardState>("loading");
-  const [errorMessage, setErrorMessage] = useState<string>(""); // Store specific error message
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null); // For "Last Updated"
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
-    setWeatherData(null); // Clear old data on prop change
+    setWeatherData(null);
     setCardState("loading");
-    setErrorMessage(""); // Clear previous errors
-    setLastUpdated(null); // Clear last updated time
+    setErrorMessage("");
+    setLastUpdated(null);
 
     fetchOpenWeatherData(city, tempScale)
       .then((data) => {
         setWeatherData(data);
-        setLastUpdated(new Date()); // Set update time on success
+        setLastUpdated(new Date());
         setCardState("ready");
       })
       .catch((err) => {
         console.error(`WeatherCard Error for ${city}:`, err);
-        setErrorMessage(err.message || "Could not retrieve weather data."); // Store the error message
+        setErrorMessage(err.message || "Could not retrieve weather data.");
         setCardState("error");
       });
-  }, [city, tempScale]); // Dependency array ensures refetch if city/scale changes
+  }, [city, tempScale]);
 
   const tempUnit = tempScale === "metric" ? "\u2103" : "\u2109";
 
-  // Define content based on state
   let cardContent: React.ReactNode;
 
   if (cardState === "loading") {
@@ -162,7 +156,7 @@ const WeatherCard: React.FC<{
           {/* Right Side: Icon & Description */}
           <Grid
             item
-            xs={5} // Take remaining space
+            xs={5}
             style={{
               textAlign: "center",
               display: "flex",
@@ -205,7 +199,6 @@ const WeatherCard: React.FC<{
       </Box>
     );
   } else {
-    // Fallback if state is ready but data is null
     cardContent = (
       <Box p={1}>
         <Typography variant="h6" className="weatherCard-title" gutterBottom>
@@ -220,8 +213,6 @@ const WeatherCard: React.FC<{
 
   // Render the container (using Paper for slight visual separation)
   return (
-    // Use Paper with outlined variant and low/no elevation
-    // Removed relative positioning and margin, handle in parent (popup.tsx)
     <Paper variant="outlined" elevation={0}>
       {cardContent}
     </Paper>

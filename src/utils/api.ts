@@ -1,8 +1,5 @@
 // src/utils/api.ts
-import { getStoredOptions, LocalStorageOptions } from "./storage"; // Import storage utility
-
-// REMOVE the hardcoded constant:
-// const OPEN_WEATHER_API_KEY = '<INSERT OPEN WEATHER API KEY>'
+import { getStoredOptions, LocalStorageOptions } from "./storage";
 
 export interface OpenWeatherData {
   name: string;
@@ -32,22 +29,16 @@ export async function fetchOpenWeatherData(
   city: string,
   tempScale: OpenWeatherTempScale
 ): Promise<OpenWeatherData> {
-  // 1. Get stored options (including the API key)
   const options: LocalStorageOptions = await getStoredOptions();
 
   // 2. Check if API key exists
   if (!options.apiKey) {
-    // Handle missing key - throw an error
-    // This error should be caught where fetchOpenWeatherData is called
     console.error("API Key not found in storage.");
     throw new Error("API Key not set. Please set it in the extension options.");
   }
 
-  // 3. Use the stored API key in the fetch URL
   const apiKey = options.apiKey;
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${tempScale}&appid=${apiKey}`;
-
-  console.log(`Fetching weather data for ${city} using URL: ${apiUrl}`); // Optional: for debugging
 
   const res = await fetch(apiUrl);
 

@@ -1,5 +1,4 @@
 // src/options/options.tsx
-// Full Code for Polished MUI v4 Options Page
 
 import React, { useState, useEffect, ChangeEvent } from "react";
 import ReactDOM from "react-dom";
@@ -30,7 +29,7 @@ import {
   ErrorOutline as ErrorIcon,
 } from "@material-ui/icons";
 import "fontsource-roboto";
-import "./options.css"; // Your existing CSS for options
+import "./options.css";
 import {
   getStoredOptions,
   setStoredOptions,
@@ -72,7 +71,7 @@ const Options: React.FC = () => {
       setTempScaleInput(
         (storedOptions.tempScale as OpenWeatherTempScale) || "metric"
       );
-      // Check initial key validity silently? Maybe not, validate only after save.
+
       setValidationResult("unknown");
     });
   }, []);
@@ -104,14 +103,12 @@ const Options: React.FC = () => {
   // --- Validation Logic ---
   const validateApiKey = async (keyToValidate: string) => {
     if (!keyToValidate || keyToValidate.trim().length !== 32) {
-      // Basic length check
       setValidationResult("invalid");
       return;
     }
     setIsValidating(true);
     setValidationResult("unknown");
     try {
-      // Use a simple, reliable city for testing
       const testUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${keyToValidate.trim()}`;
       const res = await fetch(testUrl);
       if (res.ok) {
@@ -126,7 +123,7 @@ const Options: React.FC = () => {
       }
     } catch (error) {
       console.error("API Key validation fetch error:", error);
-      setValidationResult("invalid"); // Network error etc.
+      setValidationResult("invalid");
     } finally {
       setIsValidating(false);
     }
@@ -146,7 +143,6 @@ const Options: React.FC = () => {
         setSnackbarMessage("Options saved successfully!");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
-        // Trigger validation after successful save
         validateApiKey(trimmedApiKey);
       })
       .catch((err) => {
@@ -154,7 +150,7 @@ const Options: React.FC = () => {
         setSnackbarMessage("Failed to save options.");
         setSnackbarSeverity("error");
         setSnackbarOpen(true);
-        setValidationResult("unknown"); // Reset validation on save error
+        setValidationResult("unknown");
       });
   };
 
@@ -198,7 +194,6 @@ const Options: React.FC = () => {
   };
 
   if (!options) {
-    // Simple loading text or could use Skeletons here too
     return (
       <Box p={3}>
         <Typography>Loading options...</Typography>
@@ -295,7 +290,7 @@ const Options: React.FC = () => {
                     ? "API key appears invalid. Please double-check."
                     : "Paste your 32-character key here"
                 }
-                error={validationResult === "invalid" && !isValidating} // Show error style if invalid
+                error={validationResult === "invalid" && !isValidating}
               />
               {/* Validation Status Indicator */}
               {renderValidationStatus()}
@@ -307,7 +302,6 @@ const Options: React.FC = () => {
               display="block"
               style={{ marginTop: "8px" }}
             >
-              Example format: abc123def456ghi789jkl012mno345p
             </Typography> */}
           </Grid>
 

@@ -1,9 +1,5 @@
 // src/utils/storage.ts
 
-// Import the type definition for temperature scale from api.ts
-//import { OpenWeatherTempScale } from "./api";
-
-// Defines the overall structure of what might be stored in chrome.storage.local
 export interface LocalStorage {
   cities?: string[];
   options?: LocalStorageOptions;
@@ -11,13 +7,11 @@ export interface LocalStorage {
 
 // Defines the structure of the options object
 export interface LocalStorageOptions {
-  // hasAutoOverlay: boolean;
   homeCity: string;
   tempScale: string;
-  apiKey?: string; // Added field for the user's API key
+  apiKey?: string;
 }
 
-// Type helper for keys used in chrome.storage.local.get
 export type LocalStorageKeys = keyof LocalStorage;
 
 /**
@@ -73,17 +67,14 @@ export function setStoredOptions(options: LocalStorageOptions): Promise<void> {
  */
 export function getStoredOptions(): Promise<LocalStorageOptions> {
   const keys: LocalStorageKeys[] = ["options"];
-  // Define the default options structure
   const defaultOptions: LocalStorageOptions = {
-    //hasAutoOverlay: false,
     homeCity: "",
-    tempScale: "metric", // Default to Celsius
-    apiKey: "", // Default to an empty string
+    tempScale: "metric",
+    apiKey: "",
   };
 
   return new Promise((resolve) => {
     chrome.storage.local.get(keys, (res: LocalStorage) => {
-      // Merge stored options with defaults, prioritizing stored values
       const storedOptions = res.options;
       const resolvedOptions = { ...defaultOptions, ...storedOptions };
       resolve(resolvedOptions);

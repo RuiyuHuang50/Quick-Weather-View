@@ -1,5 +1,4 @@
 // src/popup/popup.tsx
-// Polished MUI v4: Refined Spacing & Added Tooltips
 
 import React, { useEffect, useState, ChangeEvent, KeyboardEvent } from "react";
 import ReactDOM from "react-dom";
@@ -12,19 +11,19 @@ import {
   Typography,
   Button,
   CircularProgress,
-  Tooltip, // Keep Tooltip
-  Divider, // Keep Divider
+  Tooltip,
+  Divider,
 } from "@material-ui/core";
-import { Alert } from "@material-ui/lab"; // Keep Alert
+import { Alert } from "@material-ui/lab";
 import {
   Add as AddIcon,
   Close as CloseIcon,
-  Settings as SettingsIcon, // Keep SettingsIcon
-  Refresh as RefreshIcon, // Add RefreshIcon
+  Settings as SettingsIcon,
+  Refresh as RefreshIcon,
 } from "@material-ui/icons";
 import "fontsource-roboto";
-import "./popup.css"; // Your main popup styles
-import WeatherCard from "../components/WeatherCard/WeatherCard"; // Import polished card
+import "./popup.css";
+import WeatherCard from "../components/WeatherCard/WeatherCard";
 import {
   setStoredCities,
   setStoredOptions,
@@ -40,7 +39,6 @@ const App: React.FC<{}> = () => {
   const [options, setOptions] = useState<LocalStorageOptions | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  // Add state to trigger refresh in cards
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
 
   const loadData = () => {
@@ -87,11 +85,6 @@ const App: React.FC<{}> = () => {
     loadData();
   }, []);
 
-  // Trigger refresh in WeatherCard components when refreshTrigger changes
-  // Note: WeatherCard needs to add refreshTrigger to its useEffect dependency array
-  // (This simple trigger might cause unnecessary refetches if only options change,
-  // but it's a basic way to implement manual refresh)
-
   const handleCityButtonClick = () => {
     if (cityInput === "") return;
     const trimmedCity = cityInput.trim();
@@ -100,21 +93,20 @@ const App: React.FC<{}> = () => {
       return;
     }
     const updatedCities = [...cities, trimmedCity];
-    // Filter out home city before saving to storage
     setStoredCities(updatedCities.filter((c) => c !== options?.homeCity)).then(
       () => {
-        setCities(updatedCities); // Update UI state
-        setCityInput(""); // Clear input
+        setCities(updatedCities);
+        setCityInput("");
       }
     );
   };
 
   const handleCityDeleteButtonClick = (cityToDelete: string) => {
     const updatedCities = cities.filter((city) => city !== cityToDelete);
-    // Filter out home city before saving to storage
+
     setStoredCities(updatedCities.filter((c) => c !== options?.homeCity)).then(
       () => {
-        setCities(updatedCities); // Update UI state
+        setCities(updatedCities);
       }
     );
   };
@@ -126,16 +118,14 @@ const App: React.FC<{}> = () => {
       tempScale: options.tempScale === "metric" ? "imperial" : "metric",
     };
     setStoredOptions(updatedOptions).then(() => {
-      setOptions(updatedOptions); // Update local state immediately
-      setRefreshTrigger(Date.now()); // Trigger refresh on scale change
+      setOptions(updatedOptions);
+      setRefreshTrigger(Date.now());
     });
   };
 
   const handleRefreshClick = () => {
-    setError(null); // Clear errors on manual refresh
-    setRefreshTrigger(Date.now()); // Update trigger to force WeatherCard useEffect
-    // Optionally: reload city list too, though not strictly necessary unless expecting external changes
-    // loadData(); // Re-running loadData is another way but refetches options too
+    setError(null);
+    setRefreshTrigger(Date.now());
   };
 
   const openOptionsPage = () => {
@@ -265,7 +255,6 @@ const App: React.FC<{}> = () => {
       </Paper>
       {renderErrorOrInfo()}
       {apiKeyExists && (
-        // Added key to Box to help React update list on city changes
         <Box
           key={refreshTrigger}
           className="weatherCardList"
