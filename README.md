@@ -2,7 +2,8 @@
 
 A simple Chrome extension to quickly view current weather conditions for multiple cities, check weather via context menu, and see the temperature for a home city on the browser action badge.
 
-![Screenshot of Popup](screenshot_popup.png) ## Features
+![Screenshot of Popup](screenshot_popup.png) 
+## Features
 
 - **Multi-City Display:** View current weather cards for multiple saved cities in the popup.
 - **Add City:** Quickly add cities via the input box in the popup or by selecting text on a webpage and using the right-click context menu.
