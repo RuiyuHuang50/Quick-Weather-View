@@ -1,7 +1,7 @@
 # Quick Weather View - Chrome Extension
 
 A simple Chrome extension to quickly view current weather conditions for multiple cities, check weather via context menu, and see the temperature for a home city on the browser action badge.
-
+The link of this chrome extension is: [Quick Weather View](https://chromewebstore.google.com/detail/quick-weather-view/jgenfkgmjgalcjfmibgbhofejfmlnhhf?hl=en-US&utm_source=ext_sidebar)
 ![Screenshot of Popup](screenshot_popup.png) 
 ## Features
 
