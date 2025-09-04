@@ -1,13 +1,4 @@
 {
-  "version": 2,
-  "functions": {
-    "api/index.js": {
-      "runtime": "@vercel/node@20.x"
-    },
-    "api/weather.js": {
-      "runtime": "@vercel/node@20.x"
-    }
-  },
   "routes": [
     {
       "src": "/api/weather",
