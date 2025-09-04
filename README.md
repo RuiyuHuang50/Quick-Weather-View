@@ -1,8 +1,9 @@
 # Quick Weather View - Chrome Extension
 
 A simple Chrome extension to quickly view current weather conditions for multiple cities, check weather via context menu, and see the temperature for a home city on the browser action badge.
-The link of this chrome extension is: [Quick Weather View](https://chromewebstore.google.com/detail/quick-weather-view/jgenfkgmjgalcjfmibgbhofejfmlnhhf?hl=en-US&utm_source=ext_sidebar)
+
 ![Screenshot of Popup](screenshot_popup.png) 
+
 ## Features
 
 - **Multi-City Display:** View current weather cards for multiple saved cities in the popup.
@@ -10,22 +11,18 @@ The link of this chrome extension is: [Quick Weather View](https://chromewebstor
 - **Check Weather:** Select any text (like a place name) on a webpage, right-click, and select "Check weather for..." to get a notification with current conditions.
 - **Home City Badge:** Set a "Home City" in the options to display its current temperature directly on the extension's icon in the toolbar. Updates periodically.
 - **Temperature Units:** Toggle between Celsius (°C) and Fahrenheit (°F) directly in the popup.
-- **Options Page:** Configure your API key and Home City.
+- **Options Page:** Configure your Home City and temperature preferences.
 
-## Setup - IMPORTANT!
+## Installation & Setup
 
-This extension requires a **free** API key from [OpenWeatherMap](https://openweathermap.org/) to function.
+This extension comes with weather API access included - no additional setup required! Simply:
 
-1.  **Sign Up/Log In:** Go to [home.openweathermap.org/users/sign_up](https://home.openweathermap.org/users/sign_up) and create a free account (or log in).
-2.  **Get API Key:** Navigate to the [API keys tab](https://home.openweathermap.org/api_keys) in your OpenWeatherMap account dashboard.
-3.  **Copy Key:** Copy the default API key provided (it's a 32-character string).
-4.  **Enter Key in Extension:**
-    - Click the Weather Extension icon in your Chrome toolbar.
-    - If prompted, or by clicking the Settings (⚙️) icon, open the extension's Options page.
-    - Paste the copied API key into the "OpenWeatherMap API Key" field.
-    - (Optional) Set your Home City.
-    - Click "Save Options".
-    - _(Note: Newly generated API keys may take a few minutes to become active.)_
+1. Install the extension from the Chrome Web Store
+2. Click the Weather Extension icon in your toolbar
+3. Add cities or set your home city in the options
+4. Start checking the weather!
+
+The extension uses OpenWeatherMap's API service, which is included and managed by the extension developer.
 
 ## Development
 

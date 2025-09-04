@@ -21,7 +21,7 @@ async function updateBadge() {
   console.log("Attempting badge update.");
   try {
     const options: LocalStorageOptions = await getStoredOptions();
-    if (options.homeCity === "" || !options.apiKey) {
+    if (options.homeCity === "") {
       chrome.action.setBadgeText({ text: "" });
       return;
     }
@@ -58,7 +58,7 @@ chrome.runtime.onInstalled.addListener(() => {
   console.log("Extension installed/updated.");
   chrome.storage.local.get(["options", "cities"], (res) => {
     if (!res.options) {
-      setStoredOptions({ homeCity: "", tempScale: "metric", apiKey: "" });
+      setStoredOptions({ homeCity: "", tempScale: "metric" });
     }
     if (!res.cities) {
       setStoredCities([]);
@@ -147,25 +147,6 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       (async () => {
         try {
           const options = await getStoredOptions();
-          if (!options.apiKey) {
-            chrome.notifications.create(
-              "",
-              {
-                type: "basic",
-                iconUrl: chrome.runtime.getURL("icon.png"),
-                title: "API Key Required",
-                message: "Please set API key in options.",
-              },
-              (id) => {
-                if (chrome.runtime.lastError)
-                  console.error(
-                    "API Key Notify Err:",
-                    chrome.runtime.lastError.message
-                  );
-              }
-            );
-            return;
-          }
 
           console.log(`Fetching weather for "${selectedText}"...`);
           const data = await fetchOpenWeatherData(

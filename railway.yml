@@ -1,0 +1,12 @@
+# Railway deployment configuration
+services:
+  - name: quick-weather-view-api
+    source: ./backend
+    env:
+      NODE_ENV: production
+      OPENWEATHER_API_KEY: ${{ OPENWEATHER_API_KEY }}
+    healthCheck:
+      path: /health
+      interval: 30
+      timeout: 10
+      retries: 3

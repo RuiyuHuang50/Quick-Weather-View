@@ -47,27 +47,22 @@ const App: React.FC<{}> = () => {
     Promise.all([getStoredCities(), getStoredOptions()])
       .then(([storedCities, storedOptions]) => {
         setOptions(storedOptions);
-        if (!storedOptions || !storedOptions.apiKey) {
-          setError("API Key not set. Please go to Options.");
-          setCities([]);
-        } else {
-          let citiesToDisplay = [...storedCities];
-          if (storedOptions.homeCity) {
-            if (citiesToDisplay.includes(storedOptions.homeCity)) {
-              citiesToDisplay = [
-                storedOptions.homeCity,
-                ...citiesToDisplay.filter((c) => c !== storedOptions.homeCity),
-              ];
-            } else {
-              citiesToDisplay.unshift(storedOptions.homeCity);
-            }
+        let citiesToDisplay = [...storedCities];
+        if (storedOptions.homeCity) {
+          if (citiesToDisplay.includes(storedOptions.homeCity)) {
+            citiesToDisplay = [
+              storedOptions.homeCity,
+              ...citiesToDisplay.filter((c) => c !== storedOptions.homeCity),
+            ];
+          } else {
+            citiesToDisplay.unshift(storedOptions.homeCity);
           }
-          setCities(citiesToDisplay);
-          if (citiesToDisplay.length === 0) {
-            setError(
-              "No cities added. Add one above or set a Home City in Options."
-            );
-          }
+        }
+        setCities(citiesToDisplay);
+        if (citiesToDisplay.length === 0) {
+          setError(
+            "No cities added. Add one above or set a Home City in Options."
+          );
         }
       })
       .catch((err) => {
@@ -149,7 +144,6 @@ const App: React.FC<{}> = () => {
   const renderErrorOrInfo = () => {
     if (!error) return null;
     const isActionableError =
-      error.includes("API Key") ||
       error.includes("No cities") ||
       error.includes("Home city");
     return (
@@ -184,8 +178,6 @@ const App: React.FC<{}> = () => {
     );
   }
 
-  const apiKeyExists = options?.apiKey && options.apiKey.length > 0;
-
   return (
     <Box p={1.5} className="popup-container">
       {" "}
@@ -203,20 +195,16 @@ const App: React.FC<{}> = () => {
             onKeyPress={(event: KeyboardEvent<HTMLInputElement>) => {
               if (event.key === "Enter") handleCityButtonClick();
             }}
-            disabled={!apiKeyExists}
             aria-label="Add a city name"
           />
           <Tooltip title="Add City">
-            <span>
-              <IconButton
-                onClick={handleCityButtonClick}
-                size="small"
-                disabled={!apiKeyExists}
-              >
-                {" "}
-                <AddIcon fontSize="small" />{" "}
-              </IconButton>
-            </span>
+            <IconButton
+              onClick={handleCityButtonClick}
+              size="small"
+            >
+              {" "}
+              <AddIcon fontSize="small" />{" "}
+            </IconButton>
           </Tooltip>
           <Divider
             orientation="vertical"
@@ -241,7 +229,6 @@ const App: React.FC<{}> = () => {
             <IconButton
               onClick={handleRefreshClick}
               size="small"
-              disabled={!apiKeyExists}
             >
               <RefreshIcon fontSize="small" />
             </IconButton>
@@ -254,48 +241,46 @@ const App: React.FC<{}> = () => {
         </Box>
       </Paper>
       {renderErrorOrInfo()}
-      {apiKeyExists && (
-        <Box
-          key={refreshTrigger}
-          className="weatherCardList"
-          style={{
-            maxHeight: "calc(550px - 100px)",
-            overflowY: "auto",
-            paddingRight: "4px",
-          }}
-        >
-          {cities.map((city) => (
-            <Box
-              key={city}
-              style={{ position: "relative", marginBottom: "12px" }}
-            >
-              {/* Use the polished WeatherCard */}
-              <WeatherCard
-                city={city}
-                tempScale={options.tempScale as OpenWeatherTempScale}
-              />
-              {/* External Delete Button */}
-              {city !== options?.homeCity && (
-                <Tooltip title={`Delete ${city}`}>
-                  <IconButton
-                    aria-label="delete city"
-                    onClick={() => handleCityDeleteButtonClick(city)}
-                    size="small"
-                    style={{
-                      position: "absolute",
-                      top: 4,
-                      right: 4,
-                      zIndex: 1,
-                    }}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                </Tooltip>
-              )}
-            </Box>
-          ))}
-        </Box>
-      )}
+      <Box
+        key={refreshTrigger}
+        className="weatherCardList"
+        style={{
+          maxHeight: "calc(550px - 100px)",
+          overflowY: "auto",
+          paddingRight: "4px",
+        }}
+      >
+        {cities.map((city) => (
+          <Box
+            key={city}
+            style={{ position: "relative", marginBottom: "12px" }}
+          >
+            {/* Use the polished WeatherCard */}
+            <WeatherCard
+              city={city}
+              tempScale={options.tempScale as OpenWeatherTempScale}
+            />
+            {/* External Delete Button */}
+            {city !== options?.homeCity && (
+              <Tooltip title={`Delete ${city}`}>
+                <IconButton
+                  aria-label="delete city"
+                  onClick={() => handleCityDeleteButtonClick(city)}
+                  size="small"
+                  style={{
+                    position: "absolute",
+                    top: 4,
+                    right: 4,
+                    zIndex: 1,
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              </Tooltip>
+            )}
+          </Box>
+        ))}
+      </Box>
     </Box>
   );
 };

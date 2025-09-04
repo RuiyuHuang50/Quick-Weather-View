@@ -1,10 +1,11 @@
 {
   "name": "weather-extension",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "React Weather Extension",
   "scripts": {
     "start": "NODE_OPTIONS=--openssl-legacy-provider webpack --watch --progress --config webpack.dev.js",
-    "build": "webpack --watch --progress --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "build:watch": "webpack --watch --progress --config webpack.prod.js"
   },
   "author": "",
   "devDependencies": {

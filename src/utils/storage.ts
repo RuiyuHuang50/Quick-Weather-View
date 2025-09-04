@@ -9,7 +9,6 @@ export interface LocalStorage {
 export interface LocalStorageOptions {
   homeCity: string;
   tempScale: string;
-  apiKey?: string;
 }
 
 export type LocalStorageKeys = keyof LocalStorage;
@@ -70,7 +69,6 @@ export function getStoredOptions(): Promise<LocalStorageOptions> {
   const defaultOptions: LocalStorageOptions = {
     homeCity: "",
     tempScale: "metric",
-    apiKey: "",
   };
 
   return new Promise((resolve) => {
