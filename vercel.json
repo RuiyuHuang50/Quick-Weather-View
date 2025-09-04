@@ -3,14 +3,14 @@
   "name": "quick-weather-view-api",
   "builds": [
     {
-      "src": "backend/server.js",
+      "src": "api/index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "backend/server.js"
+      "dest": "api/index.js"
     }
   ],
   "env": {
