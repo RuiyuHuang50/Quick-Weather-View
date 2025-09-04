@@ -1,5 +1,5 @@
 // Vercel Serverless Function for Weather API
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Credentials', false);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -21,22 +21,24 @@ export default async function handler(req, res) {
   
   try {
     // Health check endpoint
-    if (url === '/api' || url === '/api/health') {
+    if (url === '/api' || url === '/api/' || url.includes('/health')) {
       return res.status(200).json({ 
         status: 'OK', 
         timestamp: new Date().toISOString(),
-        service: 'Quick Weather View API' 
+        service: 'Quick Weather View API',
+        version: '1.0.0'
       });
     }
 
     // Weather endpoint
-    if (url.startsWith('/api/weather') || url.includes('weather')) {
+    if (url.includes('weather')) {
       const { city, units = 'metric' } = req.query;
       
       // Validate required parameters
       if (!city) {
         return res.status(400).json({
-          error: 'City parameter is required'
+          error: 'City parameter is required',
+          usage: 'GET /api/weather?city=London&units=metric'
         });
       }
 
@@ -91,13 +93,17 @@ export default async function handler(req, res) {
     // 404 for unknown endpoints
     return res.status(404).json({
       error: 'Endpoint not found',
-      available: ['/api/health', '/api/weather?city=London&units=metric']
+      available: [
+        'GET /api - Health check',
+        'GET /api/weather?city=London&units=metric - Get weather data'
+      ]
     });
     
   } catch (error) {
     console.error('Weather API error:', error);
     return res.status(500).json({
-      error: 'Internal server error'
+      error: 'Internal server error',
+      message: error.message
     });
   }
-}
+};

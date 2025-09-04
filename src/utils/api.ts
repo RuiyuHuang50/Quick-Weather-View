@@ -28,12 +28,9 @@ export async function fetchOpenWeatherData(
   city: string,
   tempScale: OpenWeatherTempScale
 ): Promise<OpenWeatherData> {
-  // Replace with your actual deployed backend URL
-  // Railway example: const API_BASE_URL = "https://quick-weather-view-production.up.railway.app";
-  // Vercel example: const API_BASE_URL = "https://quick-weather-view.vercel.app";
-  // DigitalOcean example: const API_BASE_URL = "https://quick-weather-view-abc123.ondigitalocean.app";
-  
-  const API_BASE_URL = "http://localhost:3000"; // 👈 CHANGE THIS to your deployed URL
+  // Replace with your actual Vercel deployment URL
+  // Example: const API_BASE_URL = "https://quick-weather-view.vercel.app";
+  const API_BASE_URL = "https://YOUR_VERCEL_URL_HERE"; // 👈 REPLACE THIS with your Vercel URL
   
   const apiUrl = `${API_BASE_URL}/api/weather?city=${encodeURIComponent(city)}&units=${tempScale}`;
 
